@@ -31,24 +31,24 @@ class Session:
         self.token = token
         self.session_type = SessionType.from_string(session_type_str)
 
-    def get_session_id(self) -> str:
+    def getSessionID(self) -> str:
         return f"token:{self.token}:{self.player_id}"
 
-    def get_player_id(self) -> str:
+    def getPlayerID(self) -> str:
         return self.player_id
 
-    def get_username(self) -> str:
+    def getUsername(self) -> str:
         return self.username
 
-    def get_token(self) -> str:
+    def getToken(self) -> str:
         return self.token
 
-    def get_profile(self) -> GameProfile:
+    def getProfile(self) -> GameProfile:
         try:
             uuid_val = uuid.UUID(self.player_id)
         except ValueError:
             uuid_val = None
         return GameProfile(uuid_val, self.username)
 
-    def get_session_type(self) -> str:
+    def getSessionType(self) -> str:
         return self.session_type
