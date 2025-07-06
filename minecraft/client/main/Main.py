@@ -7,8 +7,9 @@ import Logger
 from dataclasses import dataclass
 from typing import Optional
 
-import voxelcraft.util.Session as Session
-import voxelcraft.client.main.GameConfiguration
+import minecraft.client.minecraft.Minecraft
+import minecraft.util.Session as Session
+import minecraft.client.main.GameConfiguration
 
 @dataclass
 class GameConfiguration:
@@ -102,11 +103,14 @@ def main(args: dict):
     
     # atexit.register()
 
-    game_configuration = voxelcraft.client.main.GameConfiguration.GameConfiguration(
-        userInfo = voxelcraft.client.main.GameConfiguration.UserInformation(session, property_map, profile_property_map, proxy),
-        displayInfo = voxelcraft.client.main.GameConfiguration.DisplayInformation(opt_width, opt_height, opt_fullscreen, opt_checkGlErrors),
-        folderInfo = voxelcraft.client.main.GameConfiguration.FolderInformation(opt_gameDir, opt_resourcePackDir, opt_assetsDir, opt_assetIndex),
-        gameInfo = voxelcraft.client.main.GameConfiguration.GameInformation(opt_demo, opt_version),
-        serverInfo = voxelcraft.client.main.GameConfiguration.ServerInformation(opt_server, int(opt_port))
+    GameConfiguration = minecraft.client.main.GameConfiguration
+
+    game_configuration = GameConfiguration.GameConfiguration(
+        userInfo = GameConfiguration.UserInformation(session, property_map, profile_property_map, proxy),
+        displayInfo = GameConfiguration.DisplayInformation(opt_width, opt_height, opt_fullscreen, opt_checkGlErrors),
+        folderInfo = GameConfiguration.FolderInformation(opt_gameDir, opt_resourcePackDir, opt_assetsDir, opt_assetIndex),
+        gameInfo = GameConfiguration.GameInformation(opt_demo, opt_version),
+        serverInfo = GameConfiguration.ServerInformation(opt_server, int(opt_port))
     )
-    voxelcraft.client.voxelcraft.Minecraft(game_configuration)
+
+    minecraft.client.minecraft.Minecraft.Minecraft(game_configuration)
