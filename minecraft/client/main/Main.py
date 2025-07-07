@@ -1,67 +1,30 @@
 import time
 import json
 import atexit
-import threading
+import threading    
 import Logger
-
-from dataclasses import dataclass
-from typing import Optional
 
 import minecraft.client.minecraft.Minecraft
 import minecraft.util.Session as Session
 import minecraft.client.main.GameConfiguration
 
-@dataclass
-class GameConfiguration:
-    class UserInformation:
-        session: Session
-        user_properties: dict
-        profile_properties: dict
-        proxy: Optional[tuple]
-
-    class DisplayInformation:
-        width: int
-        height: int
-        fullscreen: bool
-        check_gl_errors: bool
-
-    class folderInfo:
-        game_dir: str
-        resource_pack_dir: str
-        assets_dir: str
-        asset_index: Optional[str]
-
-    class GameInformation:
-        demo: bool
-        version: str
-
-    class ServerInformation:
-        server: Optional[str]
-        port: int
-
-
 def main(args: dict):
-    Logger.output("Hello, World!")
+    Logger.output("Starting VoxelCraft 1.8.9..")
 
     opt_demo = args.get('demo', False)
     opt_fullscreen = args.get('fullscreen', False)
     opt_checkGlErrors = args.get('checkGlErrors', False)
-
     opt_server = args.get('server', None)
     opt_port = int(args.get('port', 25565))
-
     opt_gameDir = args.get('gameDir', ".")
     opt_assetsDir = args.get('assetsDir', None)
     opt_resourcePackDir = args.get('resourcePackDir', None)
-
     opt_proxyHost = args.get('proxyHost', None)
     opt_proxyPort = int(args.get('proxyPort', 8080))
     opt_proxyUser = args.get('proxyUser', None)
     opt_proxyPass = args.get('proxyPass', None)
-
     opt_username = args.get('username', "Player" + str(int(time.time() * 1000) % 1000))
     opt_uuid = args.get('uuid', None)
-
     opt_accessToken = args.get('accessToken')
     if opt_accessToken is None:
         raise ValueError("accessToken is required")
@@ -72,16 +35,14 @@ def main(args: dict):
 
     opt_width = int(args.get('width', 854))
     opt_height = int(args.get('height', 480))
-
     opt_userProperties = args.get('userProperties', '{}')
     opt_profileProperties = args.get('profileProperties', '{}')
-
     opt_assetIndex = args.get('assetIndex', None)
     opt_userType = args.get('userType', 'legacy')
 
     non_options = args.get('_nonOptions', [])
     if non_options:
-        print("Completely ignored arguments:", non_options)
+        Logger.output("Completely ignored arguments:", non_options)
 
     if opt_proxyHost is None:
         proxy = False
@@ -93,15 +54,7 @@ def main(args: dict):
     
     opt_final_uuid = opt_uuid if opt_uuid else opt_username
 
-    session = Session.Session(
-        username=opt_username,
-        player_id=opt_final_uuid,
-        token=opt_accessToken,
-        session_type_str=opt_userType
-    )
-
-    
-    # atexit.register()
+    session = Session.Session(username=opt_username, player_id=opt_final_uuid, token=opt_accessToken, session_type_str=opt_userType)
 
     GameConfiguration = minecraft.client.main.GameConfiguration
 

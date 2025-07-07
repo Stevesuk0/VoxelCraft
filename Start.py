@@ -5,7 +5,9 @@ class Start:
         minecraft.client.main.Main.main(
             {
                 'accessToken': '0',
-                'version': '1.8'
+                'assetsDir': '.voxelcraft/assets',
+                'assetIndex': '1.8',
+                'version': '1.8',
             }
         )
 
